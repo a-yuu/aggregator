@@ -4,7 +4,7 @@
 - Sistem menerapkan model at-least-once + idempotency untuk memastikan setiap event unik hanya diproses sekali, walaupun terjadi duplikasi.
 - Deploy dilakukan melalui Docker Compose.
 ## Arsitektur Singkat
-<a href="URL_REDIRECT" target="blank"><img align="center" src="!["C:\Users\user\Pictures\Screenshots\Screenshot 2025-10-23 135404.png"]()" height="100" /></a>
+Client → FastAPI (validasi) → Async Queue → Event Aggregator (5 worker) → Dedup Store (SQLite, persisten via volume)
 ## Syarat Implementasi
 - Docker File
 - Docker Compose
