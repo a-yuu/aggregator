@@ -137,3 +137,5 @@ contoh respon:
 - Dedup store persisten: Data disimpan di SQLite melalui volume Docker, aman terhadap restart.
 - Throughput tinggi: 5 worker paralel meningkatkan kapasitas pemrosesan.
 - Jika port konflik gunakan port lain seperti 8081:8080
+
+Link YouTube: https://youtu.be/H0nz-_-x8bQ?si=idi_zzIrh1ZbxAcG 
