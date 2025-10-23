@@ -11,13 +11,16 @@ Client → FastAPI (validasi) → Async Queue → Event Aggregator (5 worker) �
 - python:3.11-slim
 ## Build & Run
 ### Build Image
-`` `json 
+```json 
+
 docker build -t log-aggregator .
-` ``
+
+```
 ### Build Docker Compose
-`` `json 
+
+```json 
 docker-compose up –build
-` ``
+```
 
 Compose akan:
 - Membangun dan menjalankan service aggregator dan publisher
@@ -25,15 +28,15 @@ Compose akan:
 - Menjalankan FastAPI pada container port 8080, dapat diakses di http://localhost:8080
 
 ### Menghentikan compose untuk direstart
-`` `json 
+```json 
 docker compose down
-` ``
+```
 
 Volume tidak dihapus, sehingga dedup store tetap tersimpan dan event lama tetap dikenali sebagai duplikat. Setelah itu, jalankan kembali
 
-`` `json 
+```json 
 docker-compose up –build
-` ``
+```
 
 ## Penggunaan Desain
 - At-least-once delivery: Duplikasi bisa terjadi saat retry.
@@ -46,7 +49,7 @@ docker-compose up –build
 ### POST /Publish
 Mengirim code dibawah ini:
 
-`` `json 
+```json 
 curl -X POST 'http://localhost:8080/publish' \
   -H 'accept: application/json' -H 'Content-Type: application/json' \
   -d '{
@@ -60,17 +63,17 @@ curl -X POST 'http://localhost:8080/publish' \
       }
     ]
   }'
-` ``
+```
 
 respon:
 
-`` `json 
+```json 
 {
   "status": "success",
   "message": "Processed 1 events",
   "details": {"accepted": 1, "rejected": 0, "duplicates_immediate": 0}
 }
-` ``
+```
 rejected dan duplicated_immediate akan akan berubah dari 0 menjadi 1 atau 2 tergantung jumlah yang terdeteksi.
 
 ### GET /events
@@ -81,26 +84,26 @@ Parameter opsional:
 - limit (default 100)
 - offset (default 0)
 
-`` `json 
+```json 
 curl -X GET 'http://localhost:8080/events?topic=user.created&limit=50&offset=0' \
   -H 'accept: application/json'
-` ``
+```
 
 respons:
 
-`` `json 
+```json 
 {"status":"success","count":2,"events":[{...}, {...}]}
-` ``
+```
 
 ### GET /stats
 GET /stats digunakan untuk melihat statistik runtime sistem.
 
-`` `json 
+```json 
 curl -X GET 'http://localhost:8080/stats' -H 'accept: application/json'
-` ``
+```
 
 respon:
-`` `json 
+```json 
 {
   "received": 4,
   "unique_processed": 2,
@@ -108,7 +111,7 @@ respon:
   "topics": {"user.created": 2},
   "uptime": 2250.48
 }
-` ``
+```
 
 Setelah restart tanpa menghapus volume, nilai duplicate_dropped akan meningkat jika event lama dikirim ulang.
 Hal ini menunjukkan deduplication dan idempotensi berjalan sesuai harapan.
@@ -116,21 +119,21 @@ Hal ini menunjukkan deduplication dan idempotensi berjalan sesuai harapan.
 ### GET /health
 GET /health digunakan untuk mengecek status kesehatan service
 
-`` `json 
+```json 
 curl -X GET 'http://localhost:8080/health'
-` ``
+```
 
 ## Unit Test Lokal
 
-`` `json 
+```json 
 python -m pytest -q -p no:warning
-` ``
+```
 
 contoh respon:
 
-`` `json 
+```json 
 9 passed in 14.44s
-` ``
+```
 
 ## NOTE!!!
 - Idempotency: Event dengan event_id sama hanya diproses sekali.
