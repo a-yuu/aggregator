@@ -116,13 +116,6 @@ respon:
 Setelah restart tanpa menghapus volume, nilai duplicate_dropped akan meningkat jika event lama dikirim ulang.
 Hal ini menunjukkan deduplication dan idempotensi berjalan sesuai harapan.
 
-### GET /health
-GET /health digunakan untuk mengecek status kesehatan service
-
-```json 
-curl -X GET 'http://localhost:8080/health'
-```
-
 ## Unit Test Lokal
 
 ```json 
