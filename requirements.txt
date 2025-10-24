@@ -1,6 +1,6 @@
-fastapi==0.104.1          # Framework web utama untuk membangun REST API asinkron
-uvicorn[standard]==0.24.0 # ASGI server yang menjalankan aplikasi FastAPI
-pydantic==2.5.0           # Library untuk validasi dan serialisasi data model
-pytest==7.4.3             # Framework pengujian utama untuk menjalankan unit test
-pytest-asyncio==0.21.1    # Plugin pytest untuk mendukung pengujian async/await
-httpx==0.25.1             # HTTP client asinkron untuk mensimulasikan publisher (pengirim event)
+fastapi                # Framework web utama untuk membangun REST API asinkron
+uvicorn[standard]      # ASGI server yang menjalankan aplikasi FastAPI
+httpx                  # HTTP client asinkron untuk mensimulasikan publisher (pengirim event)
+pytest-asyncio         # Plugin pytest untuk mendukung pengujian async/await
+pytest                 # Framework pengujian utama untuk menjalankan unit test
+pydantic               # Library untuk validasi dan serialisasi data model
